@@ -13,9 +13,7 @@ class LoginController extends Controller
     public function create(){
         return view('admin.auth.login');
     }
-    public function dashboard(){
-        return view('admin.dashboard.dashboard');
-    }
+
 
     public function store(Request $request){
         $request->validate([
