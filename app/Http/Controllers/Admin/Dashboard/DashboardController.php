@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin\Dashboard;
 
 use App\Http\Controllers\Controller;
+use App\Models\Admin;
 use Illuminate\Http\Request;
 
 
@@ -20,78 +21,21 @@ class DashboardController extends Controller
     {
         return view('admin.dashboard.home.index');
     }
-    public function addpackage()
+
+    public function admin_role()
     {
-        return view('admin.dashboard.package.index');
+        $admin = Admin::all();
+        return view('admin.dashboard.adminrole.index',compact('admin'));
     }
-    public function package_manage()
+ 
+    public function admin_role_accepted(Request $request)
     {
-        $allpackage = Package::all();
-        return view('admin.dashboard.package.manage',compact('allpackage'));
-    }
-    public function package_submit(Request $request)
-    {
+        $admin = Admin::find($request->id);
 
-        $arrayRequest = [
-            'name' => $request->name,
-            'price' => $request->price,
-        ];
-
-        $arrayValidate  = [
-            'name' => 'required',
-            'price' => "required|regex:/^\d+(\.\d{1,2})?$/"
-        ];
-
-
-        $response = Validator::make($arrayRequest, $arrayValidate);
-
-        if ($response->fails()) {
-            $msg = '';
-            foreach ($response->getMessageBag()->toArray() as $item) {
-                $msg = $item;
-            };
+        if (is_null($admin)) {
 
             return response()->json([
-                'status' => 400,
-                'msg' => $msg
-            ], 200);
-        } else {
-            DB::beginTransaction();
-
-            try {
-
-                $package = Package::create([
-                    'name' => $request->name,
-                    'price' => $request->price,
-                ]);
-
-                DB::commit();
-            } catch (\Exception $err) {
-                $package = null;
-            }
-
-            if ($package != null) {
-                return response()->json([
-                    'status' => 200,
-                    'msg' => 'Submited New Package'
-                ]);
-            } else {
-                return response()->json([
-                    'status' => 500,
-                    'msg' => 'Internal Server Error',
-                    'err_msg' => $err->getMessage()
-                ]);
-            }
-        }
-    }
-
-    public function delete_package_submit(Request $request){
-        $product = Package::find($request->id);
-
-        if (is_null($product)) {
-
-            return response()->json([
-                'msg' => "Do not Find any Package",
+                'msg' => "Do not Find Admin",
                 'status' => 404
             ], 404);
         } else {
@@ -99,15 +43,17 @@ class DashboardController extends Controller
             DB::beginTransaction();
 
             try {
-             
+
                 // multiple image delete end
 
-                $product->delete();
+                $admin->role = 'admin';
+                $admin->save();
+
                 DB::commit();
 
                 return response()->json([
                     'status' => 200,
-                    'msg' => 'Delete This Package',
+                    'msg' => 'Accepted',
                 ], 200);
             } catch (\Exception $err) {
 

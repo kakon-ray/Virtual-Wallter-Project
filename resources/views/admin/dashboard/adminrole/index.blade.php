@@ -16,7 +16,7 @@
             <div id="content">
 
                 <!-- Topbar -->
-                @include('layouts.admin.topnav')
+               @include('layouts.admin.topnav')
                 <!-- End of Topbar -->
 
                 <!-- Begin Page Content -->
@@ -26,30 +26,33 @@
                         <div class="col-lg-12">
                             <div class="p-3">
                                 <div class="table-responsive">
-                                    <table class="table table-bordered text-center" id="dataTable" width="100%"
-                                        cellspacing="0">
+                                    <table class="table table-bordered text-center" id="dataTable" width="100%" cellspacing="0">
                                         <thead>
                                             <tr>
-                                                <th>Package</th>
-                                                <th>Price</th>
+                                                <th>Name</th>
+                                                <th>Email</th>
+                                                <th>Role</th>
                                                 <th>Operation</th>
                                             </tr>
                                         </thead>
 
                                         <tbody>
-                                            @foreach ($allpackage as $item)
+                                            @foreach ($admin as $item)
+                                              @if($item->role == false || $item->role != 'superadmin')
                                                 <tr>
                                                     <td>{{ $item->name }}</td>
-                                                    <td>{{ $item->price }}</td>
-
+                                                    <td>{{ $item->email }}</td>
+                                                    <td>{{ $item->role }}</td>
+                                                   
                                                     <td>
 
                                                         <button type="button"
-                                                            onclick="delete_package({!! $item->id !!})"
-                                                            class="btn btn-danger btn-circle btn-sm"><i
-                                                                class="fas fa-trash"></i></button>
+                                                            onclick="accepted({!! $item->id !!})"
+                                                            class="btn btn-primary btn-sm"> Accepted </button>
                                                     </td>
                                                 </tr>
+
+                                                @endif
                                             @endforeach
 
 
@@ -107,20 +110,20 @@
     </div>
 
     <script>
-        const delete_package = (id) => {
+        const accepted = (id) => {
             Swal.fire({
                 customClass: 'swalstyle',
                 title: 'Are you sure?',
-                text: "Delete this Item",
+                text: "Accepted this Item",
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, delete it!'
+                confirmButtonText: 'Yes, Accepted Role!'
             }).then((result) => {
                 if (result.isConfirmed) {
                     axios
-                        .get("/admin/package/delete", {
+                        .get("/admin/role/accepted", {
                             params: {
                                 id: id
                             }
