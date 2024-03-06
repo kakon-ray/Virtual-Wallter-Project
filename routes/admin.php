@@ -16,11 +16,12 @@ Route::name('admin.')->prefix('admin')->group(function () {
 
 
 
-    Route::name('package.')->prefix('dashboard')->group(function () {
+    Route::name('package.')->prefix('package')->group(function () {
         Route::middleware(['AdminAuth', 'VerifiedAdminEmail'])->group(function () {
-            Route::get('/', [DashboardController::class, 'addpackage'])->name('create');
+            Route::get('/create', [DashboardController::class, 'addpackage'])->name('create');
+            Route::get('/manage', [DashboardController::class, 'package_manage'])->name('manage');
             Route::post('submit', [DashboardController::class, 'package_submit'])->name('submit');
-
+            Route::get('delete', [DashboardController::class, 'delete_package_submit']);
         });
     });
 

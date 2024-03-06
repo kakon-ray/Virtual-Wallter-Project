@@ -204,31 +204,41 @@
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
 
-                    <div class="card p-5">
-                        <form method="POST" action="{{ route('admin.package.submit') }}" id="product"
-                            enctype="multipart/form-data">
-                            @csrf
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="p-3">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered text-center" id="dataTable" width="100%" cellspacing="0">
+                                        <thead>
+                                            <tr>
+                                                <th>Package</th>
+                                                <th>Price</th>
+                                                <th>Operation</th>
+                                            </tr>
+                                        </thead>
 
-                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    <label>Package Name</label>
-                                    <input required type="text" class="form-control" name="package_name"
-                                        placeholder="Product Product">
-                                </div>
-                                <div class="col-lg-12 my-4">
-                                    <label>Price</label>
-                                    <input required type="text" class="form-control" name="price"
-                                        placeholder="Product Product">
-                                </div>
-                                <div class="col-lg-12">
-                                    <button type="submit" class="btn btn-primary">
-                                        Submit
-                                    </button>
+                                        <tbody>
+                                            @foreach ($allpackage as $item)
+                                                <tr>
+                                                    <td>{{ $item->name }}</td>
+                                                    <td>{{ $item->price }}</td>
+                                                   
+                                                    <td>
+
+                                                        <button type="button"
+                                                            onclick="delete_package({!! $item->id !!})"
+                                                            class="btn btn-danger btn-circle btn-sm"><i
+                                                                class="fas fa-trash"></i></button>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+
+
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
-
-                        </form>
+                        </div>
                     </div>
                 </div>
                 <!-- /.container-fluid -->
@@ -276,4 +286,72 @@
             </div>
         </div>
     </div>
+
+    <script>
+        const delete_package = (id) => {
+            Swal.fire({
+                customClass: 'swalstyle',
+                title: 'Are you sure?',
+                text: "Delete this Item",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    axios
+                        .get("/admin/package/delete", {
+                            params: {
+                                id: id
+                            }
+                        })
+                        .then(function(response) {
+
+                            if (response.data.status == 200) {
+                                Swal.fire({
+                                    customClass: 'swalstyle',
+                                    position: 'top-center',
+                                    icon: 'success',
+                                    title: response.data.msg,
+                                    showConfirmButton: false,
+                                    timer: 1500
+
+                                })
+                                setTimeout(function() {
+                                    location.reload();
+                                }, 1500);
+
+
+                            } else {
+                                Swal.fire({
+                                    customClass: 'swalstyle',
+                                    position: 'top-center',
+                                    icon: 'error',
+                                    title: response.data.msg,
+                                    text: response.data.err_msg,
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                })
+                            }
+
+
+                        })
+                        .catch(function(error) {
+                            Swal.fire({
+                                customClass: 'swalstyle',
+                                position: 'top-center',
+                                icon: 'error',
+                                title: error.message,
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+                        });
+                }
+            })
+
+
+
+        }
+    </script>
 @endsection
