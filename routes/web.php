@@ -1,12 +1,11 @@
 <?php
 
 use App\Http\Controllers\User\Dashboard\DashboardController;
+use App\Http\Controllers\User\UserGuest\UserGuestController;
 use Illuminate\Support\Facades\Route;
 
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [UserGuestController::class, 'home'])->name('home');
 
 Route::name('user.')->prefix('user')->group(function () {
 
