@@ -13,7 +13,7 @@ class DashboardController extends Controller
 {
     public function dashboard(){
         $allPackage = Package::all();
-        return view('user.guest.home',compact('allPackage'));
+        return view('user.dashboard.dashboard',compact('allPackage'));
     }
     public function myorder(){
 

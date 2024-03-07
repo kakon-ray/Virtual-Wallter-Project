@@ -16,7 +16,7 @@
       </button>
   
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <a class="navbar-brand mt-2 mt-lg-0" href="#">
+        <a class="navbar-brand mt-2 mt-lg-0" href="{{url('/')}}">
           <img
             src="https://web-builderit.com/img/logo.png"
             height="50"
@@ -93,10 +93,10 @@
             aria-labelledby="navbarDropdownMenuAvatar"
           >
             <li>
-              <a class="dropdown-item" href="#">My profile</a>
+              <a class="dropdown-item" href="{{route('user.myorder')}}">My Order</a>
             </li>
             <li>
-              <a class="dropdown-item" href="#">Settings</a>
+              <a class="dropdown-item" href="{{route('user.dashboard')}}">Dashboard</a>
             </li>
             <li>
               <a class="dropdown-item" href="#">Logout</a>

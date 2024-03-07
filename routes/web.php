@@ -14,10 +14,13 @@ Route::name('user.')->prefix('user')->group(function () {
 
         Route::get('/stripe', [StripePementController::class, 'stripe'])->name('dashboard');
         Route::post('/make-pement', [StripePementController::class, 'make_pement'])->name('make.pement');
-        Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
-        
+       
         
         Route::get('/myorder', [DashboardController::class, 'myorder'])->name('myorder');
+
+
+
+        Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
  
     
     });
