@@ -1,4 +1,4 @@
-@extends('layouts.user.guest')
+@extends('layouts.admin.guest')
 @section('content')
 
     <div class="mb-4 text-sm text-gray-600 dark:text-gray-400">

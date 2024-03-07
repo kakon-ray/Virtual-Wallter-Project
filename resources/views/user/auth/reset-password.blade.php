@@ -1,4 +1,4 @@
-@extends('layouts.user.guest')
+@extends('layouts.admin.guest')
 @section('content')
 
     <form method="POST" action="{{ route('password.store') }}">
