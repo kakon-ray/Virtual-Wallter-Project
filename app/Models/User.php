@@ -38,6 +38,12 @@ class User extends Authenticatable implements MustVerifyEmail
      *
      * @var array<string, string>
      */
+
+
+     public function order(){
+        return $this->hasMany(Order::class,'user_id');
+    }
+    
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
