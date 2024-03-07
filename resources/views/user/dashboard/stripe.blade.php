@@ -12,7 +12,7 @@
                     <form action="{{route('user.make.pement')}}" method="POST">
                         @csrf
                         <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-                            data-key="pk_test_51OrWocSGtl8m7yc76PPD1FRRcATdXJtMN215XjAQ1mlax9HPpqeCzmrMXfC8eJyf2MMEPDjKesuvPmfSMFbwpn6Z00dgzZC329"
+                            data-key="pk_test_51L1Q4WAIzqv6QO7WbF65f9XiKcZCgtmjJKOV0xZ2FiSu9E0SUzSv4Oww4ypuScqtuG0xEw38Rm3izV86U3GzCpA700fOuyGypr"
                             data-name="Web Shop" data-description="Your custom designed t-shirt" data-amount="1000"
                             data-currency="usd" data-label="Buy Package" data-image="https://web-builderit.com/img/logo.png"></script>
                     </form>
