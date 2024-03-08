@@ -32,6 +32,7 @@
                                             <tr>
                                                 <th>Package</th>
                                                 <th>Price</th>
+                                                <th>Status</th>
                                                 <th>Operation</th>
                                             </tr>
                                         </thead>
@@ -41,6 +42,7 @@
                                                 <tr>
                                                     <td>{{ $item->name }}</td>
                                                     <td>{{ $item->price }}</td>
+                                                    <td>{{ $item->status }}</td>
 
                                                     <td>
 

@@ -15,8 +15,9 @@ return new class extends Migration
     {
         Schema::create('packages', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('price');
+            $table->string('name')->nullable();
+            $table->string('price')->nullable();
+            $table->string('status')->nullable();
             $table->timestamps();
         });
     }

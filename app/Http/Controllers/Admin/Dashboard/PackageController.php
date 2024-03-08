@@ -32,10 +32,12 @@ class PackageController extends Controller
         $arrayRequest = [
             'name' => $request->name,
             'price' => $request->price,
+            'status' => $request->status,
         ];
 
         $arrayValidate  = [
             'name' => 'required',
+            'status' => 'required',
             'price' => "required|regex:/^\d+(\.\d{1,2})?$/"
         ];
 
@@ -60,6 +62,7 @@ class PackageController extends Controller
                 $package = Package::create([
                     'name' => $request->name,
                     'price' => $request->price,
+                    'status' => $request->status,
                 ]);
 
                 DB::commit();

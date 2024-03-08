@@ -26,7 +26,7 @@
                                     <th scope="row">{{$item->name}}</th>
                                     <td>{{$item->price}}</td>
                                     <td>
-                                        <form action="{{route('user.make.pement')}}" method="POST">
+                                        <form action="{{route('user.make.pement')}}" id="userorder" method="POST">
                                             @csrf
                                             <input type="text" name="price" value="{{$item->price}}" class="d-none">
                                             <input type="text" name="package_name" value="{{$item->name}}" class="d-none">

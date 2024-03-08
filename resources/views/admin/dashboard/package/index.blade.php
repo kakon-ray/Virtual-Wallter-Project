@@ -39,6 +39,14 @@
                                     <input required type="text" class="form-control" name="price"
                                         placeholder="Package Price">
                                 </div>
+                                <div class="col-lg-12 my-4">
+                                    <label>Packages Type</label>
+                                    <select class="form-control" name="status" aria-label="Default select example">
+                                        <option selected>Open this select menu</option>
+                                        <option value="Heigher">Heigher</option>
+                                        <option value="Low">Low</option>
+                                      </select>
+                                </div>
                                 <div class="col-lg-12">
                                     <button type="submit" class="btn btn-primary">
                                         Submit
