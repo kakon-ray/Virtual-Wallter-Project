@@ -14,75 +14,86 @@ use Illuminate\Support\Facades\Validator;
 
 class DashboardController extends Controller
 {
-    public function information(){
+    public function information()
+    {
         return view('user.dashboard.information');
     }
-    public function information_submit(Request $request){
-        $arrayRequest = [
-            'account_number' => $request->account_number,
-            'card_number' => $request->card_number,
-            'phone_number' => $request->phone_number,
-            'contact' => $request->contact,
-        ];
+    public function information_submit(Request $request)
+    {
 
-        $arrayValidate  = [
-            'account_number' =>  'required',
-            'card_number' => 'required',
-            'phone_number' => 'required|regex:/(0)[0-9]/|not_regex:/[a-z]/|min:9',
-            'contact' => 'required',
-        ];
+        $user = User::find($request->id);
 
-
-        $response = Validator::make($arrayRequest, $arrayValidate);
-
-        if ($response->fails()) {
-            $msg = '';
-            foreach ($response->getMessageBag()->toArray() as $item) {
-                $msg = $item;
-            };
-
+        if (is_null($user)) {
             return response()->json([
-                'status' => 400,
-                'msg' => $msg
-            ], 200);
+                'msg' => "Do not Find any User",
+                'status' => 404
+            ], 404);
         } else {
-            DB::beginTransaction();
+            $arrayRequest = [
+                'account_number' => $request->account_number,
+                'card_number' => $request->card_number,
+                'phone_number' => $request->phone_number,
+                'contact' => $request->contact,
+            ];
 
-            try {
+            $arrayValidate  = [
+                'account_number' =>  'required',
+                'card_number' => 'required',
+                'phone_number' => 'required|regex:/(0)[0-9]/|not_regex:/[a-z]/|min:9',
+                'contact' => 'required',
+            ];
 
-                $products = Information::create([
-                    'account_number' => $request->account_number,
-                    'card_number' => $request->card_number,
-                    'phone_number' => $request->phone_number,
-                    'contact' => $request->contact,
-                ]);
 
-            } catch (\Exception $err) {
-                $products = null;
-            }
+            $response = Validator::make($arrayRequest, $arrayValidate);
 
-            if ($products != null) {
+            if ($response->fails()) {
+                $msg = '';
+                foreach ($response->getMessageBag()->toArray() as $item) {
+                    $msg = $item;
+                };
+
                 return response()->json([
-                    'status' => 200,
-                    'msg' => 'Submited New Employe'
-                ]);
+                    'status' => 400,
+                    'msg' => $msg
+                ], 200);
             } else {
-                return response()->json([
-                    'status' => 500,
-                    'msg' => 'Internal Server Error',
-                    'err_msg' => $err->getMessage()
-                ]);
+                DB::beginTransaction();
+
+                try {
+
+                    $user->account_number =  $request->account_number;
+                    $user->card_number =  $request->card_number;
+                    $user->phone_number =  $request->phone_number;
+                    $user->contact =  $request->contact;
+                    $user->save();
+
+                    DB::commit();
+                    
+                } catch (\Exception $err) {
+                    $user = null;
+                }
+
+                if ($user != null) {
+                    return response()->json([
+                        'status' => 200,
+                        'msg' => 'User Information Saved'
+                    ]);
+                } else {
+                    return response()->json([
+                        'status' => 500,
+                        'msg' => 'Internal Server Error',
+                        'err_msg' => $err->getMessage()
+                    ]);
+                }
             }
         }
     }
 
-    public function myorder(){
+    public function myorder()
+    {
 
-        $myorder = User::where('email',Auth::guard()->user()->email)->with('order')->first();
+        $myorder = User::where('email', Auth::guard()->user()->email)->with('order')->first();
         $myorder = $myorder->order;
-        return view('user.dashboard.myorder',compact('myorder'));
+        return view('user.dashboard.myorder', compact('myorder'));
     }
-
-
-
 }
