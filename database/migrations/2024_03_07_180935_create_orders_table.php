@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('user_email')->nullable();
             $table->string('price')->nullable();
             $table->string('status')->nullable();
+            $table->string('package_type')->nullable();
             $table->string('transaction_id')->nullable();
             $table->timestamps();
         });

@@ -44,6 +44,7 @@ class StripePementController extends Controller
                         'price' => $charge->amount,
                         'status' => $charge->status,
                         'transaction_id' => $charge->balance_transaction,
+                         'package_type'=> $request->package_type,
                     ]);
 
                     DB::commit();

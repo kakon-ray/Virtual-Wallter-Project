@@ -30,6 +30,7 @@
                                             @csrf
                                             <input type="text" name="price" value="{{$item->price}}" class="d-none">
                                             <input type="text" name="package_name" value="{{$item->name}}" class="d-none">
+                                            <input type="text" name="package_type" value="{{$item->status}}" class="d-none">
                                             <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
                                                 data-key="pk_test_51L1Q4WAIzqv6QO7WbF65f9XiKcZCgtmjJKOV0xZ2FiSu9E0SUzSv4Oww4ypuScqtuG0xEw38Rm3izV86U3GzCpA700fOuyGypr"
                                                 data-name="Web Shop" data-description="Your custom designed t-shirt" data-amount="{{$item->price}}"

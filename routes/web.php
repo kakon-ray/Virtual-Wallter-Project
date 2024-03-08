@@ -19,6 +19,7 @@ Route::name('user.')->prefix('user')->group(function () {
         Route::get('/myorder', [DashboardController::class, 'myorder'])->name('myorder');
         Route::get('/dashboard', [DashboardController::class, 'information'])->name('dashboard');
         Route::post('/information/submit', [DashboardController::class, 'information_submit'])->name('information.submit');
+        Route::get('/passport/nationidcard', [DashboardController::class, 'passport_national_id'])->name('passport.nationidcard');
  
     
     });

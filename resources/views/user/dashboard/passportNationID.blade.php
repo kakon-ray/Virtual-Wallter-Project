@@ -15,7 +15,7 @@
                                 aria-current="true">
                                 <i class="fas fa-tachometer-alt fa-fw me-3"></i><span>User Information</span>
                             </a>
-                            @if ($myorder->package_type == 'higher')
+                            @if($myorder->package_type == 'higher')
                                 <a href="{{ route('user.passport.nationidcard') }}"
                                     class="list-group-item list-group-item-action py-2 ripple">
                                     <i class="fas fa-chart-area fa-fw me-3"></i><span>Passport and ID</span>
@@ -46,43 +46,47 @@
                 </nav>
                 <!-- Sidebar -->
 
+
             </div>
             <div class="col-lg-9">
                 <div class="text-center py-5">
-                    <h2>User Information</h2>
+                    <h2>Passport Image Upload</h2>
                 </div>
                 <form action="{{ route('user.information.submit') }}" id="information" method="POST">
                     @csrf
                     <input type="text" name="id" class="d-none" value="{{ Auth::guard('web')->user()->id }}">
                     <div class="row mb-4">
+
                         <div class="col">
-                            <div data-mdb-input-init class="form-outline">
-                                <input type="text" id="form6Example1" name="account_number" class="form-control"
-                                    value="{{ $userinfomation->account_number }}" />
-                                <label class="form-label" for="form6Example1">Bank Account</label>
-                            </div>
+                            <label class="form-label">Passport Front Image</label>
+                            <input type="file" name="image" required="" accept="image/*" class="dropify">
                         </div>
                         <div class="col">
-                            <div data-mdb-input-init class="form-outline">
-                                <input type="text" id="form6Example2" name="card_number" class="form-control"
-                                    value="{{ $userinfomation->card_number }}" />
-                                <label class="form-label" for="form6Example2">Card</label>
-                            </div>
+                            <label class="form-label">Passport Back Image</label>
+                            <input type="file" name="image" required="" accept="image/*" class="dropify">
                         </div>
                     </div>
 
-                    <!-- Text input -->
-                    <div data-mdb-input-init class="form-outline mb-4">
-                        <input type="text" id="form6Example3" name="phone_number" class="form-control"
-                            value="{{ $userinfomation->phone_number }}" />
-                        <label class="form-label" for="form6Example3">Phone Number</label>
-                    </div>
+                    <button type="submit" class="btn btn-primary btn-block mb-4">Submit Information</button>
+                </form>
 
-                    <!-- Text input -->
-                    <div data-mdb-input-init class="form-outline mb-4">
-                        <input type="text" id="form6Example4" name="contact" class="form-control"
-                            value="{{ $userinfomation->contact }}" />
-                        <label class="form-label" for="form6Example4">Contact</label>
+
+                <div class="text-center py-5">
+                    <h2>National Id Image Upload</h2>
+                </div>
+                <form action="{{ route('user.information.submit') }}" id="information" method="POST">
+                    @csrf
+                    <input type="text" name="id" class="d-none" value="{{ Auth::guard('web')->user()->id }}">
+                    <div class="row mb-4">
+
+                        <div class="col">
+                            <label class="form-label">Passport Front Image</label>
+                            <input type="file" name="image" required="" accept="image/*" class="dropify">
+                        </div>
+                        <div class="col">
+                            <label class="form-label">Passport Back Image</label>
+                            <input type="file" name="image" required="" accept="image/*" class="dropify">
+                        </div>
                     </div>
 
                     <button type="submit" class="btn btn-primary btn-block mb-4">Submit Information</button>
@@ -91,4 +95,19 @@
             </div>
         </div>
     </div>
+
+    {{-- image upload --}}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://jeremyfagis.github.io/dropify/dist/js/dropify.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://jeremyfagis.github.io/dropify/dist/css/dropify.min.css">
+    <script src="{{ asset('public/backend') }}/plugins/bootstrap-switch/js/bootstrap-switch.min.js"></script>
+
+
+    <script type="text/javascript">
+        //thumbline image upload 
+        $('.dropify').dropify(); //dropify image
+        $("input[data-bootstrap-switch]").each(function() {
+            $(this).bootstrapSwitch('state', $(this).prop('checked'));
+        });
+    </script>
 @endsection

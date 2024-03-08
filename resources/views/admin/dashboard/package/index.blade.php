@@ -43,8 +43,8 @@
                                     <label>Packages Type</label>
                                     <select class="form-control" name="status" aria-label="Default select example">
                                         <option selected>Open this select menu</option>
-                                        <option value="Heigher">Heigher</option>
-                                        <option value="Low">Low</option>
+                                        <option value="higher">higher</option>
+                                        <option value="low">Low</option>
                                       </select>
                                 </div>
                                 <div class="col-lg-12">

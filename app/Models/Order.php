@@ -16,6 +16,7 @@ class Order extends Model
         'price',
         'status',
         'transaction_id',
+        'package_type',
     ];
 
 

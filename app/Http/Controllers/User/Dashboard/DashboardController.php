@@ -16,7 +16,15 @@ class DashboardController extends Controller
 {
     public function information()
     {   $userinfomation = User::where('id',Auth::guard('web')->user()->id)->first();
-        return view('user.dashboard.information',compact('userinfomation'));
+        $myorder = User::where('email', Auth::guard()->user()->email)->with('order')->first();
+        $myorder = $myorder->order->first();
+        return view('user.dashboard.information',compact('userinfomation','myorder'));
+    }
+    public function passport_national_id()
+    {  
+        $myorder = User::where('email', Auth::guard()->user()->email)->with('order')->first();
+        $myorder = $myorder->order->first();
+        return view('user.dashboard.passportNationID',compact('myorder'));
     }
     public function information_submit(Request $request)
     {
