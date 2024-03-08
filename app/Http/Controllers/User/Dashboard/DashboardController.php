@@ -14,6 +14,8 @@ use Illuminate\Support\Facades\Validator;
 use PDF;
 use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
+use File;
+use ZipArchive;
 
 class DashboardController extends Controller
 {
@@ -34,8 +36,8 @@ class DashboardController extends Controller
     {
         $myorder = User::where('email', Auth::guard()->user()->email)->with('order')->first();
         $myorder = $myorder->order->first();
-
-        return view('user.dashboard.download_passport_id', compact('myorder'));
+        $userinfomation = User::where('id', Auth::guard('web')->user()->id)->first();
+        return view('user.dashboard.download_passport_id', compact('myorder','userinfomation'));
     }
     public function pdf_download()
     {
@@ -63,6 +65,55 @@ class DashboardController extends Controller
 
         return $pdf->download('passportandid.pdf');
     }
+
+    public function zip_download()
+    {
+        
+        $zip = new ZipArchive;
+    
+        $fileName = 'myNewFile.zip';
+     
+        if ($zip->open(public_path($fileName), ZipArchive::CREATE) === TRUE)
+        {
+            $userinfomation = User::where('id', Auth::guard('web')->user()->id)->first();
+            
+            $passport_front = pathinfo($userinfomation->passport_front);
+            $passport_front = $passport_front['basename'];
+            $passport_front = public_path("/uploads/") . $passport_front;
+
+            $relativeNameInZipFile = basename($passport_front);
+            $zip->addFile($passport_front, $relativeNameInZipFile);
+
+
+            $passport_back = pathinfo($userinfomation->passport_back);
+            $passport_back = $passport_back['basename'];
+            $passport_back = public_path("/uploads/") . $passport_back;
+            
+            $relativeNameInZipFile = basename($passport_back);
+            $zip->addFile($passport_back, $relativeNameInZipFile);
+
+
+            $id_front = pathinfo($userinfomation->id_front);
+            $id_front = $id_front['basename'];
+            $id_front = public_path("/uploads/") . $id_front;
+            
+            $relativeNameInZipFile = basename($id_front);
+            $zip->addFile($id_front, $relativeNameInZipFile);
+
+
+            $id_back = pathinfo($userinfomation->id_back);
+            $id_back = $id_back['basename'];
+            $id_back = public_path("/uploads/") . $id_back;
+            
+            $relativeNameInZipFile = basename($id_back);
+            $zip->addFile($id_back, $relativeNameInZipFile);
+               
+            $zip->close();
+        }
+      
+        return response()->download(public_path($fileName));
+    }
+    
 
 
     public function passport_submit(Request $request)

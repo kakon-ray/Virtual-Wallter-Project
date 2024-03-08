@@ -15,18 +15,19 @@
                                 aria-current="true">
                                 <i class="fas fa-tachometer-alt fa-fw me-3"></i><span>User Information</span>
                             </a>
-                            @if($myorder->package_type == 'higher')
+                            @if ($myorder->package_type == 'higher')
                                 <a href="{{ route('user.passport.nationidcard') }}"
                                     class="list-group-item list-group-item-action py-2 ripple">
-                                    <i class="fas fa-chart-area fa-fw me-3"></i><span>Passport and ID</span>
+                                    <i class="fas fa-chart-area fa-fw me-3"></i><span>Passport and ID Upload</span>
                                 </a>
                             @endif
- 
+
+                            @if ($myorder->package_type == 'higher')
                                 <a href="{{ route('user.passport.nationidcard.download') }}"
                                     class="list-group-item list-group-item-action py-2 ripple">
                                     <i class="fas fa-chart-area fa-fw me-3"></i><span>Passport and ID Download</span>
                                 </a>
-
+                            @endif
 
                             <a href="#" class="list-group-item list-group-item-action py-2 ripple"><i
                                     class="fas fa-lock fa-fw me-3"></i><span>Password</span></a>
@@ -55,19 +56,42 @@
 
             </div>
             <div class="col-lg-9">
-               
+
                 <div class="row">
                     <div class="col-lg-6">
-                        <a href="{{route('user.pdf.download')}}" target="_blank" class="btn btn-primary w-100">Download Passport and NID Pdf</a>
+                        <a href="{{ route('user.pdf.download') }}" target="_blank" class="btn btn-primary w-100">Download
+                            Passport and NID Pdf</a>
                     </div>
                     <div class="col-lg-6">
-                        <a href="" class="btn btn-primary w-100">Download Passport and NID ZIP</a>
+                        <a href="{{ route('user.zip.download') }}" class="btn btn-primary w-100">Download Passport and NID
+                            ZIP</a>
                     </div>
-                   
+
                 </div>
+
+                <div class="row text-center">
+                    <h2 class="py-5">Passport Front and Back Image</h2>
+                    <div class="col-lg-6">
+                        <img src="{{ $userinfomation->passport_front }}" class="img-fluid">
+                    </div>
+                    <div class="col-lg-6">
+                        <img src="{{ $userinfomation->passport_back }}" class="img-fluid">
+                    </div>
+
+                    <h2 class="py-5">National ID Card Front and Back Image</h2>
+                    <div class="col-lg-6">
+                        <img src="{{ $userinfomation->id_front }}" class="img-fluid">
+                    </div>
+                    <div class="col-lg-6">
+                        <img src="{{ $userinfomation->id_back }}" class="img-fluid">
+                    </div>
+                </div>
+
 
             </div>
         </div>
+
+
     </div>
 
     {{-- image upload --}}
