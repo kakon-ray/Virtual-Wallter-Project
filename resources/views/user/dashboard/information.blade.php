@@ -56,13 +56,13 @@
                     <div class="row mb-4">
                         <div class="col">
                             <div data-mdb-input-init class="form-outline">
-                                <input type="text" id="form6Example1" name="account_number" class="form-control" />
+                                <input type="text" id="form6Example1" name="account_number" class="form-control" value="{{$userinfomation->account_number}}"/>
                                 <label class="form-label" for="form6Example1">Bank Account</label>
                             </div>
                         </div>
                         <div class="col">
                             <div data-mdb-input-init class="form-outline">
-                                <input type="text" id="form6Example2" name="card_number" class="form-control" />
+                                <input type="text" id="form6Example2" name="card_number" class="form-control" value="{{$userinfomation->card_number}}"/>
                                 <label class="form-label" for="form6Example2">Card</label>
                             </div>
                         </div>
@@ -70,13 +70,13 @@
 
                     <!-- Text input -->
                     <div data-mdb-input-init class="form-outline mb-4">
-                        <input type="text" id="form6Example3" name="phone_number" class="form-control" />
+                        <input type="text" id="form6Example3" name="phone_number" class="form-control" value="{{$userinfomation->phone_number}}"/>
                         <label class="form-label" for="form6Example3">Phone Number</label>
                     </div>
 
                     <!-- Text input -->
                     <div data-mdb-input-init class="form-outline mb-4">
-                        <input type="text" id="form6Example4" name="contact" class="form-control" />
+                        <input type="text" id="form6Example4" name="contact" class="form-control" value="{{$userinfomation->contact}}"/>
                         <label class="form-label" for="form6Example4">Contact</label>
                     </div>
 

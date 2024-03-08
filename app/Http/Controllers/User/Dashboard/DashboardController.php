@@ -15,8 +15,8 @@ use Illuminate\Support\Facades\Validator;
 class DashboardController extends Controller
 {
     public function information()
-    {
-        return view('user.dashboard.information');
+    {   $userinfomation = User::where('id',Auth::guard('web')->user()->id)->first();
+        return view('user.dashboard.information',compact('userinfomation'));
     }
     public function information_submit(Request $request)
     {
