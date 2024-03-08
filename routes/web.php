@@ -20,6 +20,9 @@ Route::name('user.')->prefix('user')->group(function () {
         Route::get('/dashboard', [DashboardController::class, 'information'])->name('dashboard');
         Route::post('/information/submit', [DashboardController::class, 'information_submit'])->name('information.submit');
         Route::get('/passport/nationidcard', [DashboardController::class, 'passport_national_id'])->name('passport.nationidcard');
+        
+        Route::post('/passport/submit', [DashboardController::class, 'passport_submit'])->name('passport.submit');
+        Route::post('/nationid/submit', [DashboardController::class, 'nationalid_submit'])->name('nationalid.submit');
  
     
     });

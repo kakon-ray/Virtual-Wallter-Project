@@ -24,6 +24,10 @@ return new class extends Migration
             $table->string('card_number')->nullable();
             $table->string('phone_number')->nullable();
             $table->string('contact')->nullable();
+            $table->string('passport_front')->nullable();
+            $table->string('passport_back')->nullable();
+            $table->string('id_front')->nullable();
+            $table->string('id_back')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
