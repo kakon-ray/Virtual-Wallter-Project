@@ -11,32 +11,64 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
-
+use PDF;
 use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
 
 class DashboardController extends Controller
 {
     public function information()
-    {   $userinfomation = User::where('id',Auth::guard('web')->user()->id)->first();
+    {
+        $userinfomation = User::where('id', Auth::guard('web')->user()->id)->first();
         $myorder = User::where('email', Auth::guard()->user()->email)->with('order')->first();
         $myorder = $myorder->order->first();
-        return view('user.dashboard.information',compact('userinfomation','myorder'));
+        return view('user.dashboard.information', compact('userinfomation', 'myorder'));
     }
     public function passport_national_id()
-    {  
+    {
         $myorder = User::where('email', Auth::guard()->user()->email)->with('order')->first();
         $myorder = $myorder->order->first();
-        return view('user.dashboard.passportNationID',compact('myorder'));
+        return view('user.dashboard.passportNationID', compact('myorder'));
+    }
+    public function passport_national_id_download()
+    {
+        $myorder = User::where('email', Auth::guard()->user()->email)->with('order')->first();
+        $myorder = $myorder->order->first();
+
+        return view('user.dashboard.download_passport_id', compact('myorder'));
+    }
+    public function pdf_download()
+    {
+        $userinfomation = User::where('id', Auth::guard('web')->user()->id)->first();
+
+        $passport_front = pathinfo($userinfomation->passport_front);
+        $passport_front = $passport_front['basename'];
+
+        $passport_back = pathinfo($userinfomation->passport_back);
+        $passport_back = $passport_back['basename'];
+
+        $id_front = pathinfo($userinfomation->id_front);
+        $id_front = $id_front['basename'];
+
+        $id_back = pathinfo($userinfomation->id_back);
+        $id_back = $id_back['basename'];
+
+        $data = [
+            'passport_front' => $passport_front,
+            'passport_back' => $passport_back,
+            'id_front' => $id_front,
+            'id_back' => $id_back,
+        ];
+        $pdf = PDF::loadView('user.dashboard.download_pdf', $data);
+
+        return $pdf->download('passportandid.pdf');
     }
 
 
     public function passport_submit(Request $request)
-    {  
-        // dd($request->all());
+    {
 
         $user = User::find(Auth::guard('web')->user()->id);
-        // dd($request->all());
 
         $arrayRequest = [
             'passport_front' => $request->passport_front,
@@ -87,7 +119,7 @@ class DashboardController extends Controller
                     $passport_back = "http://" . $host . "/uploads/" . $filename;
                 }
 
-               
+
 
                 $user->passport_front =  $passport_front;
                 $user->passport_back =  $passport_back;
@@ -115,8 +147,83 @@ class DashboardController extends Controller
 
 
     public function nationalid_submit(Request $request)
-    {  
-        dd($request->all());
+    {
+
+        $user = User::find(Auth::guard('web')->user()->id);
+
+        $arrayRequest = [
+            'id_front' => $request->id_front,
+            'id_back' => $request->id_back,
+        ];
+
+        $arrayValidate  = [
+            'id_front' => ['required', 'image', 'mimes:jpeg,png,jpg,gif,svg'],
+            'id_back' => ['required', 'image', 'mimes:jpeg,png,jpg,gif,svg'],
+
+        ];
+
+        $response = Validator::make($arrayRequest, $arrayValidate);
+
+        if ($response->fails()) {
+            $msg = '';
+            foreach ($response->getMessageBag()->toArray() as $item) {
+                $msg = $item;
+            };
+
+            return response()->json([
+                'status' => 400,
+                'msg' => $msg
+            ], 200);
+        } else {
+            DB::beginTransaction();
+
+            try {
+
+                if ($request->id_front) {
+                    $file = $request->file('id_front');
+                    $filename = 'id-front' . '.' . $file->getClientOriginalExtension();
+
+                    $img = Image::make($file);
+                    $img->resize(500, 500)->save(public_path('uploads/' . $filename));
+
+                    $host = $_SERVER['HTTP_HOST'];
+                    $id_front = "http://" . $host . "/uploads/" . $filename;
+                }
+                if ($request->id_back) {
+                    $file = $request->file('id_back');
+                    $filename = 'id-back' . '.' . $file->getClientOriginalExtension();
+
+                    $img = Image::make($file);
+                    $img->resize(500, 500)->save(public_path('uploads/' . $filename));
+
+                    $host = $_SERVER['HTTP_HOST'];
+                    $id_back = "http://" . $host . "/uploads/" . $filename;
+                }
+
+
+
+                $user->id_front =  $id_front;
+                $user->id_back =  $id_back;
+                $user->save();
+
+                DB::commit();
+            } catch (\Exception $err) {
+                $user = null;
+            }
+
+            if ($user != null) {
+                return response()->json([
+                    'status' => 200,
+                    'msg' => 'Submited New Images'
+                ]);
+            } else {
+                return response()->json([
+                    'status' => 500,
+                    'msg' => 'Internal Server Error',
+                    'err_msg' => $err->getMessage()
+                ]);
+            }
+        }
     }
 
 
@@ -170,7 +277,6 @@ class DashboardController extends Controller
                     $user->save();
 
                     DB::commit();
-                    
                 } catch (\Exception $err) {
                     $user = null;
                 }
