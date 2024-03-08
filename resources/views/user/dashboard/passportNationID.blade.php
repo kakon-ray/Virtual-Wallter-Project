@@ -56,7 +56,7 @@
                 <div class="text-center py-5">
                     <h2>Passport Image Upload</h2>
                 </div>
-                <form action="{{ route('user.passport.submit') }}" id="" method="POST"
+                <form action="{{ route('user.passport.submit') }}" id="passport_nid_upload" method="POST"
                     enctype="multipart/form-data">
                     @csrf
                     <input type="text" name="id" class="d-none" value="{{ Auth::guard('web')->user()->id }}">
@@ -79,7 +79,7 @@
                 <div class="text-center py-5">
                     <h2>National Id Image Upload</h2>
                 </div>
-                <form action="{{ route('user.nationalid.submit') }}" id="" method="POST"
+                <form action="{{ route('user.nationalid.submit') }}" id="passport_nid_upload" method="POST"
                     enctype="multipart/form-data">
                     @csrf
                     <input type="text" name="id" class="d-none" value="{{ Auth::guard('web')->user()->id }}">
