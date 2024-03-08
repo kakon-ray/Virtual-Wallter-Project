@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\Auth\AdminRegistationController;
 use App\Http\Controllers\Admin\Auth\LoginController;
 use App\Http\Controllers\Admin\Auth\ForgetController;
 use App\Http\Controllers\Admin\Dashboard\DashboardController;
+use App\Http\Controllers\Admin\Dashboard\OrderController;
 use App\Http\Controllers\Admin\Dashboard\PackageController;
 
 Route::name('admin.')->prefix('admin')->group(function () {
@@ -29,5 +30,12 @@ Route::name('admin.')->prefix('admin')->group(function () {
         });
     });
 
+
+
+    Route::name('order.')->prefix('order')->group(function () {
+        Route::middleware(['AdminAuth', 'VerifiedAdminEmail'])->group(function () {
+            Route::get('/manage', [OrderController::class, 'manage_order'])->name('manage');
+        });
+    });
 
 });

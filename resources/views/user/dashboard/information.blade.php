@@ -11,10 +11,11 @@
                 <nav id="sidebarMenu" class="collapse d-lg-block sidebar collapse bg-white">
                     <div class="position-sticky">
                         <div class="list-group list-group-flush mx-3 mt-4">
-                            <a href="#" class="list-group-item list-group-item-action py-2 ripple" aria-current="true">
-                                <i class="fas fa-tachometer-alt fa-fw me-3"></i><span>Main dashboard</span>
+                            <a href="#" class="list-group-item list-group-item-action py-2 ripple active"
+                                aria-current="true">
+                                <i class="fas fa-tachometer-alt fa-fw me-3"></i><span>User Information</span>
                             </a>
-                            <a href="#" class="list-group-item list-group-item-action py-2 ripple active">
+                            <a href="#" class="list-group-item list-group-item-action py-2 ripple">
                                 <i class="fas fa-chart-area fa-fw me-3"></i><span>Webiste traffic</span>
                             </a>
                             <a href="#" class="list-group-item list-group-item-action py-2 ripple"><i
@@ -173,6 +174,43 @@
                     <!-- Container wrapper -->
                 </nav>
                 <!-- Navbar -->
+            </div>
+            <div class="col-lg-9">
+                <div class="text-center py-5">
+                    <h2>User Information</h2>
+                </div>
+                <form action="{{ route('user.information.submit') }}" id="information" method="POST">
+                    @csrf
+                    <div class="row mb-4">
+                        <div class="col">
+                            <div data-mdb-input-init class="form-outline">
+                                <input type="text" id="form6Example1" name="account_number" class="form-control" />
+                                <label class="form-label" for="form6Example1">Bank Account</label>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div data-mdb-input-init class="form-outline">
+                                <input type="text" id="form6Example2" name="card_number" class="form-control" />
+                                <label class="form-label" for="form6Example2">Card</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Text input -->
+                    <div data-mdb-input-init class="form-outline mb-4">
+                        <input type="text" id="form6Example3" name="phone_number" class="form-control" />
+                        <label class="form-label" for="form6Example3">Phone Number</label>
+                    </div>
+
+                    <!-- Text input -->
+                    <div data-mdb-input-init class="form-outline mb-4">
+                        <input type="text" id="form6Example4" name="contact" class="form-control" />
+                        <label class="form-label" for="form6Example4">Contact</label>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-block mb-4">Submit Information</button>
+                </form>
+
             </div>
         </div>
     </div>

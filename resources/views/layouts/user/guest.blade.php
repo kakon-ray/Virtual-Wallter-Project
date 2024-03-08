@@ -36,6 +36,21 @@
             integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
         </script>
 
+        <!-- Bootstrap core JavaScript-->
+        <script src="{{ asset('admin/vendor/jquery/jquery.min.js') }}"></script>
+        <script src="{{ asset('admin/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+
+        <!-- Core plugin JavaScript-->
+        <script src="{{ asset('admin/vendor/jquery-easing/jquery.easing.min.js') }}"></script>
+
+
+        <!-- sweetalert -->
+        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+        <script src="{{ asset('user/js/alert.js') }}"></script>
+
+        <!-- axios -->
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
     </body>
 

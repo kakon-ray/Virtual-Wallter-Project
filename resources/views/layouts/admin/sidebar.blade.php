@@ -50,6 +50,19 @@
             </div>
 
         </li>
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapse4"
+                aria-expanded="true" aria-controls="collapseTwo">
+                <i class="fas fa-fw fa-cog"></i>
+                <span>Order</span>
+            </a>
+            <div id="collapse4" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                <div class="bg-white py-1 collapse-inner rounded">
+                    <a class="collapse-item" href="{{route('admin.order.manage')}}">New Order</a>
+                </div>
+            </div>
+
+        </li>
 
     </ul>
     <!-- End of Sidebar -->
